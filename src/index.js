@@ -1,11 +1,18 @@
 import express from "express";
 import cors from "cors";
 import productRoutes from "./routes/product.route.js";
+import notFound from "./middleware/notFound.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 const app = express();
 
 // Configurar CORS
-app.use(cors());
+const permitido = {
+  origin: ["http://localhost:3001"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true 
+}
+app.use(cors(permitido));
 
 // Middleware para parsear JSON
 app.use(express.json());
@@ -17,6 +24,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products",productRoutes)
+
+// Middlewares finales
+app.use(notFound);        // Para rutas no encontradas (404)
+app.use(errorHandler);    // Para errores generales
 
 
 app.listen(PORT, () => {
