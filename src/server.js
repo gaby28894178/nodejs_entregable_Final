@@ -1,7 +1,13 @@
 import express from "express";
+import cors from "cors";
 import productRoutes from "./routes/product.route.js";
 
 const app = express();
+
+// Configurar CORS
+app.use(cors());
+
+// Middleware para parsear JSON
 app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
