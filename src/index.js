@@ -3,6 +3,8 @@ import cors from "cors";
 import productRoutes from "./routes/product.route.js";
 import notFound from "./middleware/notFound.js";
 import errorHandler from "./middleware/errorHandler.js";
+import authRoutes from "./routes/auth.routes.js"; 
+import { authentication } from "./middleware/authentication.js";
 
 const app = express();
 
@@ -23,7 +25,9 @@ app.get("/", (req, res) => {
   res.send({ msj: "running /" });
 });
 
-app.use("/api/products",productRoutes)
+app.use("/api/products",authentication, productRoutes)
+
+app.use("/api/auth",authRoutes)
 
 // Middlewares finales
 app.use(notFound);        // Para rutas no encontradas (404)
