@@ -1,7 +1,6 @@
 {
   "builds": [
     {
-      "Versopm":2,
       "src": "server.js",
       "use": "@vercel/node"
     }
