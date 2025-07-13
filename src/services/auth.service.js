@@ -1,9 +1,13 @@
+import bcrypt from 'bcrypt';
 import { getUserByEmail, createUser } from '../models/user.model.js';
 
 const loginUser = async (email, password) => {
   const user = await getUserByEmail(email);
   if (!user) return null;
-  if (user.password !== password) return null;
+
+  const isValid = await bcrypt.compare(password, user.password);
+  if (!isValid) return null;
+
   return user;
 };
 
